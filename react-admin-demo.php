@@ -18,31 +18,50 @@ add_action('admin_menu', function () {
     );
 });
 
+add_action('admin_head',function(){
+    ?>
+    <script>
+        const ctitle="Contact Manager React"
+    </script>
+    <?php
+});
+
+add_action('admin_head',function(){
+    ?>
+    <script type='module'>
+        import RefreshRuntime from '//localhost:5173/@react-refresh'
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => { }
+    </script>
+    <?php 
+}); //react preamble fix
+
+
 add_action('admin_enqueue_scripts', 'vite_react_admin_script');
 function vite_react_admin_script($hook) {
     if ($hook !== 'toplevel_page_vite-react-admin') {
         return;
     }
 
-    wp_enqueue_script('vite-react-admin-js',
-        plugin_dir_url(__FILE__) . 'index-CauoZ3BH.js',
-        [],
-        time(),
-        true
-    );
-
-    wp_enqueue_style('vite-react-admin-css',
-        plugin_dir_url(__FILE__) . 'index-mOncF05j.css',
-        [],
-        '1.0'
-    );
-
-    // wp_enqueue_script_module(
-    //     'vite-react-admin-js',
-    //     'http://localhost:5173/src/main.js',
+    // wp_enqueue_script('vite-react-admin-js',
+    //     plugin_dir_url(__FILE__) . 'index-CauoZ3BH.js',
     //     [],
-    //     time()
+    //     time(),
+    //     true
     // );
+
+    // wp_enqueue_style('vite-react-admin-css',
+    //     plugin_dir_url(__FILE__) . 'index-mOncF05j.css',
+    //     [],
+    //     '1.0'
+    // );
+
+    wp_enqueue_script_module(
+        'vite-react-admin-js',
+        '//localhost:5173/src/main.jsx',
+        [],
+        time()
+    );
 
     // wp_localize_script('vite-react-admin-js', 'reactdemo', [
     //     'name' => "Awesome Contact Manager"
